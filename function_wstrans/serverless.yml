@@ -1,0 +1,20 @@
+component: scf
+name: wstransTEST
+org: tencent
+app: wsAppTEST
+stage: dev
+
+inputs:
+  name: ${name}-${stage}
+  src: ./
+  region: ${env:REGION}
+  handler: transmit.main_handler
+  runtime: Nodejs10.15
+  environment:
+    variables:
+      apiid: api-pgrw7a14
+  apigatewayConf:
+    enableCORS: true
+    protocols:
+      - http
+      - https

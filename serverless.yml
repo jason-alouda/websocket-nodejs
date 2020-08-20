@@ -1,0 +1,12 @@
+name: wsAppTEST
+author: jahchuen
+org: tencent
+description: Build a websocket using nodejs
+keywords: tencent, serverless, scf, apigw, websocket
+license: MIT
+src:
+  src: ./
+  exclude:
+    - .env
+    - serverless.yml
+    - '.git/**'

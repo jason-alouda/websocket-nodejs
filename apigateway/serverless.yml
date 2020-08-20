@@ -1,0 +1,24 @@
+component: apigateway # (必填) 组件名称，此处为 apigateway
+name: websocketapiTEST # (必填) 实例名称
+org: tencent # (可选) 用于记录组织信息，默认值为您的腾讯云账户 appid
+app: wsAppTEST # (可选) 该应用名称
+stage: dev # (可选) 用于区分环境信息，默认值为 dev
+
+inputs:
+  region: ${env:REGION}
+  protocols:
+    - http
+    - https
+  serviceName: serverlessws
+  description: the serverless websocket
+  environment: release
+  endpoints:
+    #前端类型: WEBSOCKET, 后端类型: SCF
+    - path: /pgws
+      method: GET
+      protocol: WEBSOCKET
+      function:
+        # 前端类型为WEBSOCKET且后端为SCF时, transportFunctionName 为必填
+        transportFunctionName: ${output:${stage}:${app}:wstransTEST.functionName}
+        registerFunctionName: ${output:${stage}:${app}:wsconnectTEST.functionName}
+        cleanupFunctionName: ${output:${stage}:${app}:wsdisconnectTEST.functionName}

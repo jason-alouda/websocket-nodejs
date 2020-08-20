@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+   <meta charset="utf-8">
+   <title>Simple Chat Application </title>
+   <link rel="stylesheet" href="client.css">
+   </head>
+
+   <body>
+      <h1>Simple chat application - Room 1</h1>
+      <br>
+      <label for="userName" id="userNameLabel">Enter your username</label>
+      <input type="text" id="userName"><br>
+      <button id="wsbutton" onclick="OpenWebSocket()">Get connected</button><br><br>
+      <div id="message-wrapper"></div><br>
+      <div id="send-bar" class="hidden">
+        <label for="msgInput">Compose a new message</label>
+        <input type="text" id="msgInput">
+        <button onclick="sendMessage()">Send new message</button>
+      </div>
+
+      <script type="text/javascript">
+        let ws;
+        let name;
+        function OpenWebSocket() {
+          name = document.querySelector("#userName").value;
+          if (name.length == 0) {
+            alert("Please enter a username first");
+            return;
+          }
+          document.querySelector("#userName").classList.add("hidden");
+          document.querySelector("#userNameLabel").classList.add("hidden");
+          //document.querySelector("#message-wrapper").classList.remove("hidden");
+          document.querySelector("#send-bar").classList.remove("hidden");
+          document.querySelector("#wsbutton").innerText = "Disconnect";
+          ws = new WebSocket("ws://service-bceuscn6-1302554812.gz.apigw.tencentcs.com/pgws");
+          let msgWrapper = document.getElementById('message-wrapper');
+          // Connecting to server
+          ws.onopen = function() {
+             let p = document.createElement('p')
+             p.innerText = name + " is open to new connections"
+             msgWrapper.appendChild(p)
+          };
+          // Receiving message from server
+          ws.onmessage = function (evt)
+          {
+             let received_msg = evt.data;
+             console.log(received_msg);
+             if (received_msg.indexOf("sorry") == -1) {
+               let p = document.createElement('p')
+               p.innerText = received_msg
+               //console.log(received_msg.slice(0, received_msg.indexOf(':')));
+               if (received_msg.slice(0, received_msg.indexOf(':')) === name) {
+                 p.align = "right"
+               }
+               msgWrapper.appendChild(p)
+             }
+          };
+          // Closing connection to server
+          ws.onclose = function()
+          {
+             let p = document.createElement('p')
+             p.innerText = "Closing connection..."
+             msgWrapper.appendChild(p)
+          };
+          //document.querySelector("#wsbutton").addEventListener("click", CloseWebSocket())
+        }
+
+        function sendMessage() {
+          let msg = document.querySelector("#msgInput").value;
+          console.log("Sending msg ".concat(msg));
+          //ws.send(JSON.stringify({name, msg}))
+          //ws.send(JSON.stringify({msg}));
+          ws.send(msg);
+        }
+
+        function CloseWebSocket() {
+          ws.close();
+        }
+     </script>
+   </body>
+</html>
