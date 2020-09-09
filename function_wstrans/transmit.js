@@ -8,8 +8,7 @@ exports.main_handler = async (event, context, callback) => {
   }
   let data = event['websocket']['data'];
   let connectionID = event['websocket']['secConnectionID'];
-  let sendbackHost = "http://set-websocket.cb-common.apigateway.tencentyun.com/api-pgrw7a14";
-  //let sendbackHost = "http://set-websocket.cb-common.apigateway.tencentyun.com/api-5aek8mmc";
+  let sendbackHost = "http://set-websocket.cb-common.apigateway.tencentyun.com/api-2mqlmzvy"
   let retmsg = {}
   retmsg['websocket'] = {}
   retmsg['websocket']['action'] = "data send"

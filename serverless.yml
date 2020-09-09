@@ -1,12 +1,16 @@
-name: wsAppTEST
-author: jahchuen
+name: nodejs-websocket
+author: Jason Ah Chuen (Tencent Intern)
 org: tencent
 description: Build a websocket using nodejs
-keywords: tencent, serverless, scf, apigw, websocket
+keywords: tencent, serverless, scf, apigw, websocket, nodejs
+repo: https://github.com/jason-alouda/websocket-nodejs
+readme:
 license: MIT
 src:
   src: ./
   exclude:
     - .env
-    - serverless.yml
     - '.git/**'
+    - '**/node_modules'
+    - '**/package-lock.json'
+    - serverless.yml

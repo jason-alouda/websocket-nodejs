@@ -1,7 +1,7 @@
 component: scf
-name: wsdisconnectTEST
+name: wsdisconnect
 org: tencent
-app: wsAppTEST
+app: nodejs-websocket
 stage: dev
 
 inputs:
