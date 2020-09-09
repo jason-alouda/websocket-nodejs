@@ -16,21 +16,5 @@ exports.main_handler = async (event, context, callback) => {
     "secConnectionID": connectionID
   }
   retmsg['websocket']['secWebSocketProtocol'] = event['websocket']['secWebSocketProtocol']
-  /*
-  if "secWebSocketExtensions" in event['websocket'].keys():
-      ext = event['websocket']['secWebSocketExtensions']
-      retext = []
-      exts = ext.split(";")
-      print(exts)
-      for e in exts:
-          e = e.strip(" ")
-          if e == "permessage-deflate":
-              # retext.append(e)
-              pass
-          if e == "client_max_window_bits":
-              # retext.append(e+"=15")
-              pass
-      retmsg['websocket']['secWebSocketExtensions'] = ";".join(retext)
-  */
   return retmsg
 }

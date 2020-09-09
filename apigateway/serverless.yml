@@ -12,6 +12,7 @@ inputs:
   serviceName: serverlessws
   description: the serverless websocket
   environment: release
+  timeout: 300
   endpoints:
     #前端类型: WEBSOCKET, 后端类型: SCF
     - path: /pgws

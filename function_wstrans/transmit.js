@@ -1,4 +1,5 @@
 const axios = require('axios');
+const fetch = require("node-fetch");
 
 exports.main_handler = async (event, context, callback) => {
   console.log(event);
@@ -7,22 +8,30 @@ exports.main_handler = async (event, context, callback) => {
   }
   let data = event['websocket']['data'];
   let connectionID = event['websocket']['secConnectionID'];
-  //send(connectionID, data);
   let sendbackHost = "http://set-websocket.cb-common.apigateway.tencentyun.com/api-pgrw7a14";
+  //let sendbackHost = "http://set-websocket.cb-common.apigateway.tencentyun.com/api-5aek8mmc";
   let retmsg = {}
   retmsg['websocket'] = {}
   retmsg['websocket']['action'] = "data send"
   retmsg['websocket']['secConnectionID'] = connectionID
   retmsg['websocket']['dataType'] = 'text'
-  retmsg['websocket']['data'] = JSON.stringify(data)
+  //retmsg['websocket']['data'] = JSON.stringify(data)
+  retmsg['websocket']['data'] = data
+
+  let data1;
+  let res;
+
+  let opts = {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(retmsg)
+  };
+
   try {
-    const res = await axios.post(sendbackHost, retmsg);
-    return res.status
-    console.log(`Status: ${res.status}`);
-    console.log('Body: ', res.data);
-  } catch (err) {
-    console.error(err);
-    return err
+    res = await fetch(sendbackHost, opts);
+    data1 = await res.json();
+  } catch (e) {
+    console.log(e)
   }
-  return event;
+  console.log(data1)
 };
